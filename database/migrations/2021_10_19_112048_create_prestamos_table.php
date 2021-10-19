@@ -15,6 +15,12 @@ class CreatePrestamosTable extends Migration
     {
         Schema::create('prestamos', function (Blueprint $table) {
             $table->id();
+            $table->string('tipo');
+            $table->integer('deuda_total');
+            $table->integer('cantidad_pagada');
+            $table->integer('cuotas');
+            $table->date('fecha_de_inicio');
+            $table->date('fecha_de_fin');
             $table->timestamps();
         });
     }
