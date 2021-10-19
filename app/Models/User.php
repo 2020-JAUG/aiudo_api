@@ -12,6 +12,15 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    //Un usuario puede tener muchas cuentas.
+    public function cuenta() {
+        return $this -> hasMany(Cuenta::class);
+    }
+
+    //Un usuario puede tener muchos prestamos.
+    public function prestamo() {
+        return $this -> hasMany(Prestamo::class);
+    }
     /**
      * The attributes that are mass assignable.
      *
