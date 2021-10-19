@@ -20,4 +20,10 @@ class Cuenta extends Model
     {
         return $this->hasMany(Prestamo::class);
     }
+
+    //Una cuenta tiene un historial de pago.
+    public function historial_de_pago()
+    {
+        return $this->hasOne(Historial_de_pago::class);
+    }
 }
