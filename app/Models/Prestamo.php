@@ -20,4 +20,18 @@ class Prestamo extends Model
     {
         return $this-> hasOne(Historial_de_pago::class);
     }
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'tipo',
+        'deuda_total',
+        'cantidad_pagada',
+        'cuotas',
+        'fecha_de_inicio',
+        'fecha_de_fin'
+    ];
 }

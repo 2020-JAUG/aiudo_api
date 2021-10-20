@@ -26,4 +26,15 @@ class Cuenta extends Model
     {
         return $this->hasOne(Historial_de_pago::class);
     }
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'tipo',
+        'numero_de_cuenta',
+        'user_id'
+    ];
 }

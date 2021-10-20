@@ -20,4 +20,17 @@ class Historial_de_pago extends Model
     {
         return $this-> belongsTo(Prestamo::class);
     }
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var string[]
+     */
+    protected $fillable = [
+        'fecha_de_pago',
+        'metodo_de_pago',
+        'status',
+        'cuenta_id',
+        'prestamos_id'
+    ];
 }
