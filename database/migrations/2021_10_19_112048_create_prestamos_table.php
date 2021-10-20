@@ -21,6 +21,7 @@ class CreatePrestamosTable extends Migration
             $table->integer('cuotas');
             $table->date('fecha_de_inicio');
             $table->date('fecha_de_fin');
+            $table->foreignId('cuenta_id')->references('id')->on('cuentas')->onDelete('cascade');
             $table->timestamps();
         });
     }
