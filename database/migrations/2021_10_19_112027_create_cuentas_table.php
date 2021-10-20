@@ -16,7 +16,7 @@ class CreateCuentasTable extends Migration
         Schema::create('cuentas', function (Blueprint $table) {
             $table->id();
             $table->string('tipo');
-            $table->integer('numero_de_cuenta')->unique();
+            $table->string('numero_de_cuenta')->unique();
             //Referencia al ID del usuario
             $table->foreignId('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
