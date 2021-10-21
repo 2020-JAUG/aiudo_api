@@ -19,18 +19,19 @@ class UserController extends Controller
          * Guardo el token del user, mediante el método auth.
          */
         $user = auth()->user();
-        $user = User::all();
 
-        if($user->profile === 'is_admin') {
+        if($user->is_admin == true) {
+            $users = User::all();
+
             return response()->json([
                 'success' => true,
                 'data' => $users
-            ]);
+            ], status: 200);
         }
 
         return response()->json([
             'success' => false,
-            'data' => 'You do not have access'
+            'data' => 'You do not have access.'
         ], status: 406);
     }
 
@@ -58,8 +59,8 @@ class UserController extends Controller
         if($user->id === $id) {
             return response()->json([
                 'success' => false,
-                'message' => 'User not found'
-            ], 400);
+                'message' => 'User not found.'
+            ], status: 400);
         }
 
         return response()->json([
@@ -91,19 +92,16 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
     }
 
 
     public function logout(Request $request)
     {
 
-        $token =  $request->user()->token();
-        $token -> revoke();
+        auth()->user()->tokens()->delete();
 
         return response()->json([
             'message' => 'Successfully logged out'
-        ]);
+        ], status: 200);
      }
 }
