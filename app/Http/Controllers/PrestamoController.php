@@ -16,13 +16,13 @@ class PrestamoController extends Controller
     {
         $user = auth()->user();
 
-        if ($user->is_admin == true) {//Nos trae todos los préstamos.
+        if ($user->is_admin == true) { //Nos trae todos los préstamos.
             $loans = Prestamo::all();
 
             return response()->json([
                 'success' => true,
                 'data' => $loans,
-            ]);
+            ], status: 200);
         } else {
 
             return response()->json([
@@ -105,7 +105,8 @@ class PrestamoController extends Controller
 
         if ($user) {
 
-            $loans = Prestamo::where('user_id', '=', $user->id)->get();
+            $loans = Prestamo::select(['tipo', 'deuda_total', 'cantidad_pagada', 'cuotas', 'fecha_de_inicio', 'fecha_de_fin', 'user_id', 'created_at'])
+                ->get();
 
             if (!$loans) {
                 return response()->json([
@@ -116,7 +117,7 @@ class PrestamoController extends Controller
                 return response()->json([
                     'success' => true,
                     'data' => $loans,
-                ],status: 200);
+                ], status: 200);
             }
         }
     }
