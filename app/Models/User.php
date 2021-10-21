@@ -30,7 +30,7 @@ class User extends Authenticatable
         'is_admin',
         'name',
         'lastName',
-        'adress',
+        'address',
         'phone',
         'dni',
         'birthday',
