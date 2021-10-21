@@ -32,6 +32,7 @@ class Prestamo extends Model
         'cantidad_pagada',
         'cuotas',
         'fecha_de_inicio',
-        'fecha_de_fin'
+        'fecha_de_fin',
+        'user_id'
     ];
 }

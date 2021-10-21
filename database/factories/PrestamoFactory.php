@@ -29,7 +29,7 @@ class PrestamoFactory extends Factory
             'cuotas' => $this->faker->randomDigitNot(5),
             'fecha_de_inicio' => $this->faker->date(),
             'fecha_de_fin' => $this->faker->date(),
-            'cuenta_id' => Cuenta::all()->random()->id//Recoge un id random del modelo cuenta.
+            'user_id' => Cuenta::all()->random()->id//Recoge un id random del modelo cuenta.
         ];
     }
 }
