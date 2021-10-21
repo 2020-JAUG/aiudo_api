@@ -14,7 +14,24 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        /**
+         * Para listar todos los usuarios.
+         * Guardo el token del user, mediante el método auth.
+         */
+        $user = auth()->user();
+        $user = User::all();
+
+        if($user->profile === 'is_admin') {
+            return response()->json([
+                'success' => true,
+                'data' => $users
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'data' => 'You do not have access'
+        ], status: 406);
     }
 
     /**
@@ -34,9 +51,21 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        $user = auth()->user()->find($id);
+
+        if($user->id === $id) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found'
+            ], 400);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => $user->toArray()
+        ], status: 200);
     }
 
     /**
@@ -46,9 +75,12 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user, $id)
     {
-        //
+        //Pasamos el ID por parámetros lo localizamos y actualizamos los datos.
+        $user = User::findOrFail($id);
+        $user->update($request->all() );
+        return $user;
     }
 
     /**
@@ -59,6 +91,19 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
     }
+
+
+    public function logout(Request $request)
+    {
+
+        $token =  $request->user()->token();
+        $token -> revoke();
+
+        return response()->json([
+            'message' => 'Successfully logged out'
+        ]);
+     }
 }
