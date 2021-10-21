@@ -14,7 +14,22 @@ class PrestamoController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+
+        if ($user->is_admin == true) {//Nos trae todos los préstamos.
+            $loans = Prestamo::all();
+
+            return response()->json([
+                'success' => true,
+                'data' => $loans,
+            ]);
+        } else {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'You do not have access.',
+            ], 400);
+        }
     }
 
     /**
@@ -22,9 +37,50 @@ class PrestamoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $user = auth()->user();
+
+        if ($user->is_admin == true) {
+
+            $this->validate($request, [
+                'tipo' => 'required',
+                'deuda_total' => 'required',
+                'cantidad_pagada' => 'required',
+                'cuotas' => 'required',
+                'fecha_de_inicio' => 'required',
+                'fecha_de_fin' => 'required',
+                'user_id' => 'required'
+            ]);
+
+            $loan = Prestamo::create([
+                'tipo' => $request->tipo,
+                'deuda_total' => $request->deuda_total,
+                'cantidad_pagada' => $request->cantidad_pagada,
+                'cuotas' => $request->cuotas,
+                'fecha_de_inicio' => $request->fecha_de_inicio,
+                'fecha_de_fin' => $request->fecha_de_fin,
+                'user_id' => $request->user_id
+            ]);
+
+            if (!$loan) {
+                return response()->json([
+                    'success' => false,
+                    'data' => 'The loan is not accepted.'
+                ], status: 400);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'data' => $loan,
+                ], status: 201);
+            }
+        } else {
+
+            return response()->json([
+                'success' => false,
+                'message' => 'You must be an administrator.',
+            ], status: 400);
+        }
     }
 
     /**
@@ -35,7 +91,6 @@ class PrestamoController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -46,7 +101,24 @@ class PrestamoController extends Controller
      */
     public function show(Prestamo $prestamo)
     {
-        //
+        $user = auth()->user();
+
+        if ($user) {
+
+            $loans = Prestamo::where('user_id', '=', $user->id)->get();
+
+            if (!$loans) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Do not have any loans.',
+                ], status: 400);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'data' => $loans,
+                ],status: 200);
+            }
+        }
     }
 
     /**
