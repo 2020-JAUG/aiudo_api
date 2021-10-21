@@ -41,10 +41,11 @@ return [
             'provider' => 'users',
         ],
 
-        //ASIGNAMOS EL DRIVER PASSPORT, PARA VALIDAR LAS PETICIONES
+        //ASIGNAMOS EL DRIVER PARA VALIDAR LAS PETICIONES.
         'api' => [
             'driver' => 'passport',
             'provider' => 'users',
+            'has' => false
         ],
     ],
 
