@@ -31,6 +31,6 @@ class Historial_de_pago extends Model
         'metodo_de_pago',
         'status',
         'cuenta_id',
-        'prestamos_id'
+        'prestamo_id'
     ];
 }
