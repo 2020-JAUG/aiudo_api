@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CuentaController;
+use App\Http\Controllers\HistorialDePagoController;
 use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -25,6 +26,7 @@ Route::post('login', [AuthController::class, 'login']);
 
 //Aquí se indican las rutas que requieren authenticate.
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    //Users.
     Route::get('/user/{id}', [UserController::class, 'show']);
     Route::post('/all_users', [UserController::class, 'index']);
     Route::post('/logout', [UserController::class, 'logout']);
@@ -39,4 +41,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/newloan', [PrestamoController::class, 'create']);
     Route::post('/allloans', [PrestamoController::class, 'index']);
     Route::get('/userloan', [PrestamoController::class, 'show']);
+
+    //Historial de pagos.
+    Route::post('/paymenthistory', [HistorialDePagoController::class, 'create']);
+    Route::post('/allpayments', [HistorialDePagoController::class, 'index']);
+    Route::get('/userpayments', [HistorialDePagoController::class, 'show']);
 });
