@@ -30,7 +30,7 @@ class PassportAuthController extends Controller
             'dni' => $request->dni,
             'birthday' => $request->birthday,
             'email' => $request->email,
-            'password' => $request->password
+            'password' =>  bcrypt($request->password)
         ]);
 
         $token = $user->createToken('LaravelAuthApp')->accessToken;
