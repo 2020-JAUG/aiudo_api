@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CuentaController;
+use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -29,8 +30,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [UserController::class, 'logout']);
     Route::put('user/edit/{id}', [UserController::class, 'update']);
 
-    //Cuentas
+    //Cuentas.
     Route::post('/createaccount', [CuentaController::class, 'create']);
     Route::post('/allaccounts', [CuentaController::class, 'index']);
     Route::get('/useraccount', [CuentaController::class, 'show']);
+
+    //Préstamos.
+    Route::post('/newloan', [PrestamoController::class, 'create']);
+    Route::post('/allloans', [PrestamoController::class, 'index']);
+    Route::get('/userloan', [PrestamoController::class, 'show']);
 });
