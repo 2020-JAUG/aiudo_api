@@ -16,21 +16,19 @@ class CuentaController extends Controller
     {
         $user = auth()->user();
 
-        if($user->is_admin == true){
+        if ($user->is_admin == true) {
             $accounts = Cuenta::all();
 
-            return response() ->json([
+            return response()->json([
                 'success' => true,
                 'data' => $accounts,
             ]);
-
         } else {
 
-            return response() ->json([
+            return response()->json([
                 'success' => false,
                 'message' => 'You do not have access.',
             ], 400);
-
         }
     }
 
@@ -43,7 +41,7 @@ class CuentaController extends Controller
     {
         $user = auth()->user();
 
-        if($user->is_admin == true){
+        if ($user->is_admin == true) {
 
             $this->validate($request, [
                 'numero_de_cuenta' => 'required|min:15',
@@ -58,22 +56,22 @@ class CuentaController extends Controller
             ]);
 
             if (!$account) {
-                return response() ->json([
+                return response()->json([
                     'success' => false,
-                    'data' => 'This action cannot be performed.'], status: 400);
+                    'data' => 'This action cannot be performed.'
+                ], status: 400);
             } else {
-                return response() ->json([
+                return response()->json([
                     'success' => true,
                     'data' => $account,
                 ], status: 201);
             }
         } else {
 
-            return response() ->json([
+            return response()->json([
                 'success' => false,
                 'message' => 'You must be an administrator.',
             ], status: 400);
-
         }
     }
 
@@ -96,7 +94,24 @@ class CuentaController extends Controller
      */
     public function show(Cuenta $cuenta)
     {
-        //
+        $user = auth()->user();
+
+        if ($user) {
+
+            $account = Cuenta::where('user_id', '=', $user->id)->get();
+
+            if (!$account) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Do not have any account.',
+                ], status: 400);
+            } else {
+                return response()->json([
+                    'success' => true,
+                    'data' => $account,
+                ],status: 200);
+            }
+        }
     }
 
     /**
