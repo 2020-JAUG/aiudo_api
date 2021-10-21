@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\PassportAuthController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CuentaController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,16 +17,20 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Ruta visibles sin auth para los nuevos registros.
-Route::post('register', [PassportAuthController::class, 'register']);
-Route::post('login', [PassportAuthController::class, 'login']);
-Route::get('logout', [PassportAuthController::class, 'logout']);
+//Ruta visibles sin authenticate para los nuevos registros.
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
+
 
 //Aquí se indican las rutas que requieren authenticate.
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/user/{id}', [UserController::class, 'show']);
+    Route::post('/all_users', [UserController::class, 'index']);
+    Route::post('/logout', [UserController::class, 'logout']);
+    Route::put('user/edit/{id}', [UserController::class, 'update']);
 
-    //Crud del user.
-    Route::resource('users', UserController::class);
-    //Logout
-    Route::post('user/logout', [UserController::class, 'logout']);
+    //Cuentas
+    Route::post('/createaccount', [CuentaController::class, 'create']);
+    Route::post('/allaccounts', [CuentaController::class, 'index']);
+    Route::get('/useraccount', [CuentaController::class, 'show']);
 });
