@@ -14,7 +14,24 @@ class CuentaController extends Controller
      */
     public function index()
     {
-        //
+        $user = auth()->user();
+
+        if($user->is_admin == true){
+            $accounts = Cuenta::all();
+
+            return response() ->json([
+                'success' => true,
+                'data' => $accounts,
+            ]);
+
+        } else {
+
+            return response() ->json([
+                'success' => false,
+                'message' => 'You do not have access.',
+            ], 400);
+
+        }
     }
 
     /**
@@ -22,9 +39,42 @@ class CuentaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $user = auth()->user();
+
+        if($user->is_admin == true){
+
+            $this->validate($request, [
+                'numero_de_cuenta' => 'required|min:15',
+                'tipo' => 'required',
+                'user_id' => 'required'
+            ]);
+
+            $account = Cuenta::create([
+                'numero_de_cuenta' => $request->numero_de_cuenta,
+                'tipo' => $request->tipo,
+                'user_id' => $request->user_id
+            ]);
+
+            if (!$account) {
+                return response() ->json([
+                    'success' => false,
+                    'data' => 'This action cannot be performed.'], status: 400);
+            } else {
+                return response() ->json([
+                    'success' => true,
+                    'data' => $account,
+                ], status: 201);
+            }
+        } else {
+
+            return response() ->json([
+                'success' => false,
+                'message' => 'You must be an administrator.',
+            ], status: 400);
+
+        }
     }
 
     /**
