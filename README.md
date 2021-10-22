@@ -18,11 +18,11 @@ Para su desarrollo he utilizado la creación de dos ramas por medio de<b> GitFlo
 
 # <h1 align ="center"> Index </h1>
 
-- [¿Qué es? 🧐](#¿quees?(#about))
-- [Entidad Relación](#entidadrelación(#entidad))
-- [Factories](#factories(#factory(#seed)))
-- [Requerimientos ⚙️](#requerimientos(#requirements))
-- [Tecnologías](#tecnologías(#tecnol))
+- [¿Qué es? 🧐](#about)
+- [Entidad Relación](#entidad)
+- [Factories](#seed)
+- [Requerimientos ⚙️](#requirements)
+- [Tecnologías](#tecnol)
 
 <a name="about"></a>
 # <h1 align ="center"> ¿Qué es?  </h1>
@@ -40,15 +40,15 @@ Es una API REST privada creada con Laravel. Simula un sistema bancario básico d
 
 He creado tres tablas y asegurado su entidad relación junto con la de usuarios. Solo los dueños de sus cuentas podrán acceder a la información, consigo esta autenticación por medio del sistema <b>Sanctum</b>.
 
-<img src="/aiudo_api/resources/assets/DDBB.png" width="1000">
+<img src="resources/assets/DDBB.png" width="1000">
 
 <a name="seed"></a>
 # <p align ="center">Factoriyes - Seeds ⚒</p>
 - Para generar datos aleatorios en la base de datos, he utilizado la libreria <b>Faker</b>. Para poder hacer uso de las <b>Factories</b>.
 #### Implementación:
-- [Crear usuarios, línea 23 a 37](/aiudo_api/database/factories/UserFactory.php).
-- [Crear cuentas manteniendo la entidad referencial, línea 23 a 28](/aiudo_api/database/factories/CuentaFactory.php).
-- [Instanciamos los modelos para poder hacer uso de las seeds, línea 17 a 20](/aiudo_api/database/seeders/DatabaseSeeder.php).
+- [Crear usuarios, línea 23 a 37](database/factories/UserFactory.php).
+- [Crear cuentas manteniendo la entidad referencial, línea 23 a 28](database/factories/CuentaFactory.php).
+- [Instanciamos los modelos para poder hacer uso de las seeds, línea 17 a 20](database/seeders/DatabaseSeeder.php).
 
 <a name="requirements"></a>
 # <p align ="center">Requerimientos ⚙️</p>
@@ -62,9 +62,9 @@ He creado tres tablas y asegurado su entidad relación junto con la de usuarios.
 
 <br/>
 <a name="tecnol"></a>
-# <p align ="center">Tecnologías 💻</p>
+#<p align ="center">Tecnologías 💻</p>
 
-<a href="https://git-scm.com/" target="_blank"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"> <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg" alt="php" width="40" height="40"/> </a><img src="/aiudo_api/resources/assets/laravel.png" alt="laravel" height="56" width="60"> <img src="/aiudo_api/resources/assets/composer.png" alt="composer" height="52" width="47">  <a href="https://postman.com" target="_blank"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="40" height="40"/> </a> </a> <img src="/aiudo_api/resources/assets/workbench.png" alt="workbench" width="40" height="40"/> <img src="/aiudo_api/resources/assets/docker-logo.png" alt="docker" width="60" height="57"/></a>
+<a href="https://git-scm.com/" target="_blank"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"> <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg" alt="php" width="40" height="40"/> </a><img src="resources/assets/laravel.png" alt="laravel" height="56" width="60"> <img src="resources/assets/composer.png" alt="composer" height="52" width="47">  <a href="https://postman.com" target="_blank"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="40" height="40"/> </a> </a> <img src="resources/assets/workbench.png" alt="workbench" width="40" height="40"/> <img src="resources/assets/docker-logo.png" alt="docker" width="60" height="57"/></a>
 
 
 [UP](#top)
