@@ -106,9 +106,9 @@ class HistorialDePagoController extends Controller
             ->join('cuentas', 'historial_de_pagos.cuenta_id', '=', 'cuentas.id')
             ->select('*')
             ->where('cuentas.user_id', '=', $user->id)
-            ->select(['fecha_de_pago', 'metodo_de_pago', 'status', 'cuenta_id', 'user_id'])//Filtro los datos que quiero mostrar.
-            ->orderBy('fecha_de_pago', 'desc')//Devuelve los pagos hechos recientemente.
-            ->get();//Con get me devuelve el valor de la consulta.
+            ->select(['fecha_de_pago', 'metodo_de_pago', 'status', 'cuenta_id', 'user_id']) //Filtro los datos que quiero mostrar.
+            ->orderBy('fecha_de_pago', 'desc') //Devuelve los pagos hechos recientemente.
+            ->get(); //Con get me devuelve el valor de la consulta.
 
         if ($user) {
 

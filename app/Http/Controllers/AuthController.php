@@ -60,7 +60,7 @@ class AuthController extends Controller
         $user = User::where('email', $data['email'])->first();
 
         //Confirmamos la contraseña.
-        if(!$user || !Hash::check($data['password'], $user->password)) {
+        if (!$user || !Hash::check($data['password'], $user->password)) {
             return response([
                 'message' => 'Bad credentials.'
             ], 401);
@@ -74,6 +74,5 @@ class AuthController extends Controller
         ];
 
         return response($response, 201);
-
     }
 }

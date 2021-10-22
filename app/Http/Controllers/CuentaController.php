@@ -99,7 +99,7 @@ class CuentaController extends Controller
         if ($user) {
 
             $account = Cuenta::select(['tipo', 'numero_de_cuenta', 'user_id', 'created_at'])
-            ->get();
+                ->get();
 
             if (!$account) {
                 return response()->json([
@@ -110,7 +110,7 @@ class CuentaController extends Controller
                 return response()->json([
                     'success' => true,
                     'data' => $account,
-                ],status: 200);
+                ], status: 200);
             }
         }
     }
