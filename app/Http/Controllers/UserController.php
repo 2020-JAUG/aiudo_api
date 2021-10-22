@@ -20,7 +20,7 @@ class UserController extends Controller
          */
         $user = auth()->user();
 
-        if($user->is_admin == true) {
+        if ($user->is_admin == true) {
             $users = User::all();
 
             return response()->json([
@@ -56,7 +56,7 @@ class UserController extends Controller
     {
         $user = auth()->user()->find($id);
 
-        if($user->id === $id) {
+        if ($user->id === $id) {
             return response()->json([
                 'success' => false,
                 'message' => 'User not found.'
@@ -80,7 +80,7 @@ class UserController extends Controller
     {
         //Pasamos el ID por parámetros lo localizamos y actualizamos los datos.
         $user = User::findOrFail($id);
-        $user->update($request->all() );
+        $user->update($request->all());
         return $user;
     }
 
@@ -103,5 +103,10 @@ class UserController extends Controller
         return response()->json([
             'message' => 'Successfully logged out.'
         ], status: 200);
-     }
+    }
+
+    public function search($name)
+    {
+        return User::where('name', 'like', '%' . $name . '%')->get();
+    }
 }
