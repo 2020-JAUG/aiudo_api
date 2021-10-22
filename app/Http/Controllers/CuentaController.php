@@ -100,6 +100,7 @@ class CuentaController extends Controller
 
             $account = Cuenta::select(['tipo', 'numero_de_cuenta', 'user_id', 'created_at'])
                 ->get();
+            $account = Cuenta::where('user_id', '=', $user->id)->get();
 
             if (!$account) {
                 return response()->json([
