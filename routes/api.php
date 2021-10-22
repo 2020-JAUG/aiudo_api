@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CuentaController;
 use App\Http\Controllers\HistorialDePagoController;
+use App\Http\Controllers\NewPasswordController;
 use App\Http\Controllers\PrestamoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -22,6 +23,11 @@ use Illuminate\Support\Facades\Route;
 //Ruta visibles sin authenticate para los nuevos registros.
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+
+//Enlazamos el restablecimiento de la contraseña.
+Route::post('forgotpassword', [NewPasswordController::class, 'forgot_password']);
+//Creamos la nueva password.
+Route::post('resetpassword', [NewPasswordController::class, 'reset']);
 
 
 //Aquí se indican las rutas que requieren authenticate.
