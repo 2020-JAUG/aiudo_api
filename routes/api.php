@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Users.
     Route::get('/user/{id}', [UserController::class, 'show']);
     Route::post('/all_users', [UserController::class, 'index']);
+    Route::get('/search/{name}', [UserController::class, 'search']);//Búsqueda por coincidencias de letras.
     Route::post('/logout', [UserController::class, 'logout']);
     Route::put('user/edit/{id}', [UserController::class, 'update']);
 
