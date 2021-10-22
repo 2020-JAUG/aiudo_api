@@ -78,10 +78,36 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user, $id)
     {
-        //Pasamos el ID por parámetros lo localizamos y actualizamos los datos.
-        $user = User::findOrFail($id);
-        $user->update($request->all());
-        return $user;
+
+        $user = auth()->user()->find($id);
+
+        if ($user->id !== $id && $user->is_admin == false) {
+            return response()->json([
+                'success' => false,
+                'message' => 'You do not have access.'
+            ], status: 400);
+        }
+
+        if (!$user) {
+            return response()->json([
+                'success' => false,
+                'message' => 'User not found.'
+            ], status: 400);
+        }
+
+        $updated = $user->fill($request->all())->save();
+
+        if ($updated)
+            return response()->json([
+                'success' => true,
+                'message' => 'User updated.'
+
+            ], status: 201);
+        else
+            return response()->json([
+                'success' => false,
+                'message' => 'User can not be updated.'
+            ], status: 500);
     }
 
     /**
