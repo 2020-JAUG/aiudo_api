@@ -62,9 +62,9 @@ He creado tres tablas y asegurado su entidad relación junto con la de usuarios.
 
 <br/>
 <a name="tecnol"></a>
-#<p align ="center">Tecnologías 💻</p>
+# <p align ="center">Tecnologías 💻</p>
 
-<a href="https://git-scm.com/" target="_blank"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank"> <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg" alt="php" width="40" height="40"/> </a><img src="resources/assets/laravel.png" alt="laravel" height="56" width="60"> <img src="resources/assets/composer.png" alt="composer" height="52" width="47">  <a href="https://postman.com" target="_blank"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="40" height="40"/> </a> </a> <img src="resources/assets/workbench.png" alt="workbench" width="40" height="40"/> <img src="resources/assets/docker-logo.png" alt="docker" width="60" height="57"/></a>
+<a href="https://git-scm.com/" target="_blank"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> <a href="https://www.php.net/" target="_blank"> <img src="https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg" alt="php" width="40" height="40"/> </a><img src="resources/assets/laravel.png" alt="laravel" height="56" width="60"> <img src="resources/assets/composer.png" alt="composer" height="52" width="47">  <a href="https://postman.com" target="_blank"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="40" height="40"/> </a> </a> <img src="resources/assets/workbench.png" alt="workbench" width="40" height="40"/> <img src="resources/assets/docker-logo.png" alt="docker" width="60" height="57"/></a>
 
 
 [UP](#top)
