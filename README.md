@@ -33,7 +33,7 @@ Es una API REST privada creada con Laravel. Simula un sistema bancario básico d
 - Crear préstamos.
 - Historial de pagos.
 - Sistema seguro de login.
-- Recuperación de contraseña.
+- Recuperación de contraseña. Para la recuperación de contraseña, he hecho uso de <b>Mailtrap</b>.
 
 <a name="entidad"></a>
 # <h1 align ="center"> Entidad Relación  </h1>
