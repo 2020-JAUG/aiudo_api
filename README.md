@@ -14,7 +14,7 @@
 | Horas trabajadas | > 14 Horas  |
 | -----------  | -------  |
 
-Para su desarrollo utilizado la creación de dos ramas por medio de<b> GitFlow.</b> Y su desarrollo está en un entorno Dockerizado.
+Para su desarrollo utilizado la creación de dos ramas por medio de<b> GitFlow.</b> Su desarrollo está en un entorno Dockerizado.
 
 # <h1 align ="center"> Index </h1>
 
