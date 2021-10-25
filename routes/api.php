@@ -54,3 +54,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/allpayments', [HistorialDePagoController::class, 'index']);
     Route::get('/userpayments', [HistorialDePagoController::class, 'show']);
 });
+
+/**
+ * "email": "movieretro6@gmail.com"
+ * "password": "admin123"
+ */

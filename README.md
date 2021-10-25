@@ -38,7 +38,9 @@ Es una API REST privada creada con Laravel. Simula un sistema bancario básico d
 <a name="entidad"></a>
 # <h1 align ="center"> Entidad Relación  </h1>
 
-He creado tres tablas y asegurado su entidad relación junto con la de usuarios. Solo los dueños de sus cuentas podrán acceder a la información, consigo esta autenticación por medio del sistema <b>Sanctum</b>.
+He creado tres tablas y las relacione junto con la tabla de usuarios. Solo los dueños de sus cuentas podrán acceder a su información, consigo esta autenticación por medio del sistema <b>Sanctum</b>.
+
+Para poder crear una cuenta un préstamo o un historial de pagos, necesitas ser un administrador. En el archivo de rutas dejo credenciales de uno, para sus pruebas.
 
 <img src="resources/assets/DDBB.png" width="1000">
 
