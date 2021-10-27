@@ -39,6 +39,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [UserController::class, 'logout']);
     Route::put('user/edit/{id}', [UserController::class, 'update']);
 
+    //Consulta a dos tablas-> users && cuentas. Solo un administrador la puede realizar.
+    Route::post('/user/account', [UserController::class, 'group']);
+
     //Cuentas.
     Route::post('/createaccount', [CuentaController::class, 'create']);
     Route::post('/allaccounts', [CuentaController::class, 'index']);
