@@ -100,17 +100,17 @@ class CuentaController extends Controller
 
             $account = Cuenta::select(['tipo', 'numero_de_cuenta', 'user_id', 'created_at'])
                 ->get();
-            $account = Cuenta::where('user_id', '=', $user->id)->get();
+            $account = Cuenta::where('user_id', $user->id)->get();
 
-            if (!$account) {
+            if ($user && $account->isEmpty()) {
                 return response()->json([
                     'success' => false,
-                    'message' => 'Do not have any account.',
+                    'message' => "You don't have an account yet",
                 ], status: 400);
             } else {
                 return response()->json([
                     'success' => true,
-                    'message' => "At the moment you don't have an account.",
+                    'message' => "These are your accounts.",
                     'data' => $account,
                 ], status: 200);
             }
