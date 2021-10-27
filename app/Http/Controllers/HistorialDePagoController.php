@@ -29,7 +29,7 @@ class HistorialDePagoController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'You do not have access.',
-            ], 400);
+            ], status: 400);
         }
     }
 

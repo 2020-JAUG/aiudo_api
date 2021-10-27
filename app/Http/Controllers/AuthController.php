@@ -45,7 +45,7 @@ class AuthController extends Controller
             'token_type' => 'Bearer'
         ]);
 
-        return response($response, 201);
+        return response($response, status: 201);
     }
 
     //Login
@@ -63,7 +63,7 @@ class AuthController extends Controller
         if (!$user || !Hash::check($data['password'], $user->password)) {
             return response([
                 'message' => 'Bad credentials.'
-            ], 401);
+            ], status: 401);
         }
 
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -73,6 +73,6 @@ class AuthController extends Controller
             'token' => $token
         ];
 
-        return response($response, 201);
+        return response($response, status: 201);
     }
 }
