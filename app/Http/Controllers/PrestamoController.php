@@ -105,10 +105,14 @@ class PrestamoController extends Controller
 
         if ($user) {
 
+            //Filtramos los campos que se le va a mostrar al usuario.
             $loans = Prestamo::select(['tipo', 'deuda_total', 'cantidad_pagada', 'cuotas', 'fecha_de_inicio', 'fecha_de_fin', 'user_id', 'created_at'])
                 ->get();
 
-            if (!$loans) {
+            //Confirmamos el id del usuario para traer sus préstamos.
+            $loans = Prestamo::where('user_id', '=', $user->id)->get();
+
+            if ($loans->isEmpty()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Do not have any loans.',
@@ -116,6 +120,7 @@ class PrestamoController extends Controller
             } else {
                 return response()->json([
                     'success' => true,
+                    'message' => 'These are your loans.',
                     'data' => $loans,
                 ], status: 200);
             }
