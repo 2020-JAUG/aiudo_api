@@ -110,6 +110,7 @@ class CuentaController extends Controller
             } else {
                 return response()->json([
                     'success' => true,
+                    'message' => 'Do not have any account.',
                     'data' => $account,
                 ], status: 200);
             }
