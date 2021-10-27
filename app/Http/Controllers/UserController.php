@@ -69,6 +69,33 @@ class UserController extends Controller
         ], status: 200);
     }
 
+    //Consulta a dos tablas-> users && cuentas.
+    public function group()
+    {
+        $user = auth()->user();
+
+        if($user->is_admin == true) {
+            /*
+             * Query para: acceder a users y unirla con cuentas.
+             * A través del campo users.id con cuentas.id
+             */
+            $query = User::join('cuentas', 'users.id', '=', 'cuentas.id')
+            ->select('users.id', 'users.name', 'users.phone', 'cuentas.tipo', 'cuentas.numero_de_cuenta')
+            ->get();
+
+            return response()->json([
+                'success' => true,
+                'message' => "These are the user's data.",
+                'data' => $query
+            ], status: 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'You do not have access.',
+            ], status: 400);
+        }
+    }
+
     /**
      * Update the specified resource in storage.
      *
