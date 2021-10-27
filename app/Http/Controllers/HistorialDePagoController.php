@@ -110,18 +110,19 @@ class HistorialDePagoController extends Controller
             ->orderBy('fecha_de_pago', 'desc') //Devuelve los pagos hechos recientemente.
             ->get(); //Con get me devuelve el valor de la consulta.
 
-        if ($user) {
-
-            return response()->json([
-                'success' => true,
-                'data' => $userPayments,
-            ], status: 200);
-        } else {
+        if ($user && $userPayments->isEmpty()) {
 
             return response()->json([
                 'success' => false,
-                'message' => 'You do not have access.',
+                'message' => "At the moment you don't have no payment history.",
             ], status: 400);
+        } else {
+
+            return response()->json([
+                'success' => true,
+                'message' => 'These are your payment history.',
+                'data' => $userPayments
+            ], status: 200);
         }
     }
 
