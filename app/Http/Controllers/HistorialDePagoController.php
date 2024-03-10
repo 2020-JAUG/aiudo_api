@@ -101,14 +101,13 @@ class HistorialDePagoController extends Controller
     {
         $user = auth()->user();
 
-        //Función para hacer una doble búsqueda para devolver un dato en conjunto.
         $userPayments = DB::table('historial_de_pagos')
             ->join('cuentas', 'historial_de_pagos.cuenta_id', '=', 'cuentas.id')
             ->select('*')
             ->where('cuentas.user_id', '=', $user->id)
-            ->select(['fecha_de_pago', 'metodo_de_pago', 'status', 'cuenta_id', 'user_id']) //Filtro los datos que quiero mostrar.
-            ->orderBy('fecha_de_pago', 'desc') //Devuelve los pagos hechos recientemente.
-            ->get(); //Con get me devuelve el valor de la consulta.
+            ->select(['fecha_de_pago', 'metodo_de_pago', 'status', 'cuenta_id', 'user_id'])
+            ->orderBy('fecha_de_pago', 'desc')
+            ->get();
 
         if ($user && $userPayments->isEmpty()) {
 
