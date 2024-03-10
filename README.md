@@ -1,5 +1,5 @@
 <a name="top"></a>
-<h1 align ="center"> Aiudo API </h1>
+<h1 align ="center"> API Bank </h1>
 <br>
 
 <p align="center">
@@ -9,12 +9,63 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-<b>Inicio: 19 Octubre | Final: 22 Octubre 2021</b>
-#### 👨🏽‍💻
-| Horas trabajadas | > 14 Horas  |
-| -----------  | -------  |
+# <p align ="center">Puesta en marcha</p>
 
-Para su desarrollo utilizado la creación de dos ramas por medio de<b> GitFlow.</b> Su desarrollo está en un entorno Dockerizado.
+## Configuracion inicial
+
+En la raíz del proyecto debes encontrar el fichero `.env.example` que debe ser renombrado como `.env`
+
+## Instalación de dependencias
+
+El proyecto utiliza Docker. Las únicas dependencias son:
+
+- `make`
+- `docker`
+- `docker-compose`
+
+## Configuración de Docker
+
+Para configurar Docker, simplemente ejecute el siguiente comando:
+
+```bash
+$ make up
+```
+
+## Para reestablecer los contenedores:
+
+```bash
+$ make down && make prune && make up
+```
+
+User `composer` y `php` a través de la consola:
+
+## Laravel
+
+```bash
+$ make shell php
+
+$ php -v
+$ composer -v
+
+# Set permissions to create logs
+$ chmod -R 775 storage/*
+
+# Install the PHP dependencies
+$ composer install
+
+# APP token:
+$ php artisan key:generate
+
+# If you want to remove the routes cache on your server
+$ php artisan route:clear
+# If you want to cache on your server
+$ php artisan cache:clear
+# If you want to clean views compilation
+$ php artisan view:clear
+
+# In case you want to exit the shell you just have to type
+$ exit
+```
 
 # <h1 align ="center"> Index </h1>
 
@@ -33,7 +84,7 @@ Es una API REST privada creada con Laravel. Simula un sistema bancario básico d
 - Crear préstamos.
 - Historial de pagos.
 - Sistema seguro de login.
-- Recuperación de contraseña. Para la recuperación de contraseña, he hecho uso de <b>Mailtrap</b>.
+- Recuperación de contraseña. Para la recuperación de contraseña.
 
 <a name="entidad"></a>
 # <h1 align ="center"> Entidad Relación  </h1>
@@ -52,15 +103,6 @@ Para poder crear una cuenta un préstamo o un historial de pagos, necesitas ser 
 - [Crear cuentas manteniendo la entidad referencial, línea 23 a 28](database/factories/CuentaFactory.php).
 - [Instanciamos los modelos para poder hacer uso de las seeds, línea 17 a 20](database/seeders/DatabaseSeeder.php).
 
-<a name="requirements"></a>
-# <p align ="center">Requerimientos ⚙️</p>
-
-- Asegúrate de tener descargado: [Download Php](https://www.php.net/downloads.php) <b>&&</b> [Download Composer](https://getcomposer.org/)
-
-- Luego el siguiente paso después de clonar el ropositorio es lanzar el siguiente comando para que nos instale las dependecias del proyecto:
-```
-    $ composer install
-```
 
 <br/>
 
