@@ -47,23 +47,24 @@ $ make shell php
 $ php -v
 $ composer -v
 
-# Set permissions to create logs
+# Actualiza los permisos de la carpeta storage
 $ chmod -R 775 storage/*
 
-# Install the PHP dependencies
 $ composer install
 
-# APP token:
 $ php artisan key:generate
 
-# If you want to remove the routes cache on your server
 $ php artisan route:clear
-# If you want to cache on your server
+
 $ php artisan cache:clear
-# If you want to clean views compilation
+
 $ php artisan view:clear
 
-# In case you want to exit the shell you just have to type
+$ php artisan migrate
+
+# Este comando inserta los seeders en la base de datos
+$ php artisan db:seed
+
 $ exit
 ```
 
