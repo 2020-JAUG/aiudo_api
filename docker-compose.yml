@@ -1,0 +1,80 @@
+version: '3.7'
+services:
+
+  # Application
+  php:
+    container_name: "${APP_NAME}_php"
+    env_file:
+      - ./.env
+    build:
+      args:
+        user: api_bank
+        uid: 1000
+      context: ./
+      dockerfile: docker-compose/php/php.dockerfile
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ~/.ssh:/home/.ssh
+    networks:
+      - ${APP_NETWORK}
+    depends_on:
+      - mysql
+
+  # Database
+  mysql:
+    image: mysql:8.0
+    container_name: "${APP_NAME}_database"
+    env_file:
+      - ./.env
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+      - ./data/mysql:/var/lib/mysql
+    networks:
+      - ${APP_NETWORK}
+
+  # Database management
+  pma:
+    image: phpmyadmin:latest
+    container_name: "${APP_NAME}_pma"
+    env_file:
+      - ./.env
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=${DB_PMA_HOST}
+      - PMA_USER=${DB_USERNAME}
+      - PMA_PASSWORD=${DB_PASSWORD}
+      - PMA_PORT=${DB_PORT}
+    ports:
+      - ${DB_PMA_PORT}:80
+    networks:
+      - ${APP_NETWORK}
+    depends_on:
+      - mysql
+
+  # Mailing Server
+  mail-hog:
+    image: mailhog/mailhog
+    container_name: "${APP_NAME}_mailhog"
+    env_file:
+      - ./.env
+    logging:
+      driver: 'none'
+    ports:
+      - 8025:8025
+    networks:
+      - ${APP_NETWORK}
+
+# Define networks
+networks:
+  api-bank:
+    driver: bridge
