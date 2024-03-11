@@ -80,7 +80,7 @@ services:
       - mysql
 
   # Mailing Server
-  mail-hog:
+  mailhog:
     image: mailhog/mailhog
     container_name: "${APP_NAME}_mailhog"
     env_file:
