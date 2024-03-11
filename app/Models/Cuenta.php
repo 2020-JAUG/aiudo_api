@@ -9,19 +9,16 @@ class Cuenta extends Model
 {
     use HasFactory;
 
-    //Una cuenta pertenece a un solo usuario
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    //Una cuenta puede tener muchos prestamos.
     public function prestamos()
     {
         return $this->hasMany(Prestamo::class);
     }
 
-    //Una cuenta tiene un historial de pago.
     public function historial_de_pago()
     {
         return $this->hasOne(Historial_de_pago::class);
@@ -37,4 +34,23 @@ class Cuenta extends Model
         'numero_de_cuenta',
         'user_id'
     ];
+
+
+    /**
+     * @param $value
+     * @return void
+     */
+    public function setTipoAttribute($value)
+    {
+        $this->attributes['tipo'] = strtolower($value);
+    }
+
+    /**
+     * @param $value
+     * @return string
+     */
+    public function getTipoAttribute($value)
+    {
+        return ucfirst($value);
+    }
 }
