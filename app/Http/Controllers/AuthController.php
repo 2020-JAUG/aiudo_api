@@ -2,77 +2,98 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-
 use App\Models\User;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Exception;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
-    //Register
-    public function register(Request $request)
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     * @throws ValidationException
+     */
+    public function register(Request $request): JsonResponse
     {
+        DB::beginTransaction();
+        try {
 
-        $this->validate($request, [
-            'name' => 'required|min:4',
-            'lastName' => 'required',
-            'address' => 'required|min:4',
-            'phone' => 'required|min:9',
-            'dni' => 'required|min:9',
-            'birthday' => 'required',
-            'email' => 'required|string|unique:users,email',
-            'password' => 'required|string|confirmed|min:8',
-        ]);
+            $this->validate($request, [
+                'name' => 'required|min:4',
+                'lastName' => 'required',
+                'address' => 'required|min:4',
+                'phone' => 'required|min:9',
+                'dni' => 'required|min:9',
+                'birthday' => 'required',
+                'email' => 'required|string|unique:users,email',
+                'password' => 'required|string|confirmed|min:8',
+            ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'lastName' => $request->lastName,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'dni' => $request->dni,
-            'birthday' => $request->birthday,
-            'email' => $request->email,
-            'password' =>  bcrypt($request->password)
-        ]);
+            $user = User::create([
+                'name' => $request->name,
+                'lastName' => $request->lastName,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'dni' => $request->dni,
+                'birthday' => $request->birthday,
+                'email' => $request->email,
+                'password' =>  bcrypt($request->password)
+            ]);
 
-        //Se llama a la propiedad plainTextToken para acceder a su valor del texto sin formato de token.
-        $token = $user->createToken('auth_token')->plainTextToken;
+            $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json([
-            'user' => $user,
-            'token' => $token,
-            'token_type' => 'Bearer'
-        ]);
-
-        return response($response, status: 201);
-    }
-
-    //Login
-    public function login(Request $request)
-    {
-        $data = $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string'
-        ]);
-
-        //Confirmamos el mail.
-        $user = User::where('email', $data['email'])->first();
-
-        //Confirmamos la contraseña.
-        if (!$user || !Hash::check($data['password'], $user->password)) {
-            return response([
-                'message' => 'Bad credentials.'
-            ], status: 401);
+            DB::commit();
+        } catch (Exception $ex) {
+            DB::rollback();
+            report($ex);
+            throw new $ex;
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        return response()->json([
+            'token' => $token,
+            'user' => $user
+        ]);
+    }
 
-        $response = [
-            'user' => $user,
-            'token' => $token
-        ];
+    /**
+     * @param Request $request
+     * @return Application|ResponseFactory|Response
+     * @throws Exception
+     */
+    public function login(Request $request)
+    {
+        try {
+            $data = $request->validate([
+                'email' => 'required|string',
+                'password' => 'required|string'
+            ]);
 
-        return response($response, status: 201);
+            $user = User::where('email', $data['email'])->first();
+
+            if (!$user || !Hash::check($data['password'], $user->password)) {
+                return response([
+                    'message' => 'Bad credentials.'
+                ],401);
+            }
+
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            $response = [
+                'token' => $token,
+                'user' => $user
+            ];
+
+            return response($response, 201);
+        } catch (Exception $ex) {
+            report($ex);
+            throw new $ex;
+        }
     }
 }
