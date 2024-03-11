@@ -15,13 +15,11 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    //Un usuario puede tener muchas cuentas.
     public function cuenta()
     {
         return $this->hasMany(Cuenta::class);
     }
 
-    //Un usuario puede tener muchos prestamos.
     public function prestamo()
     {
         return $this->hasMany(Prestamo::class);
@@ -68,10 +66,9 @@ class User extends Authenticatable
      * @param  string  $token
      * @return void
      */
-    //Para personalizar el correo electrónico.
     public function sendPasswordResetNotification($token)
     {
-        $url = 'https://example.com/reset-password?token=' . $token;
+        $url = env('RESET_PASSWORD_EXPIRATION') . $token;
 
         $this->notify(new ResetPasswordNotification($url));
     }
