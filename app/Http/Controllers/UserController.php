@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ExceptionHelper;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class UserController extends Controller
 {
+
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function index()
     {
-        /**
-         * Para listar todos los usuarios.
-         * Guardo el token del user, mediante el método auth.
-         */
         $user = auth()->user();
 
         if ($user->is_admin == true) {
@@ -26,13 +25,13 @@ class UserController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $users
-            ], status: 200);
+            ],200);
         }
 
         return response()->json([
             'success' => false,
             'data' => 'You do not have access.'
-        ], status: 406);
+        ],406);
     }
 
     /**
@@ -46,11 +45,9 @@ class UserController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     /**
+     * @param $id
+     * @return JsonResponse
      */
     public function show($id)
     {
@@ -60,25 +57,24 @@ class UserController extends Controller
             return response()->json([
                 'success' => false,
                 'message' => 'User not found.'
-            ], status: 400);
+            ],400);
         }
 
         return response()->json([
             'success' => true,
             'message' => $user->toArray()
-        ], status: 200);
+        ],200);
     }
 
-    //Consulta a dos tablas-> users && cuentas.
+
+    /**
+     * @return JsonResponse
+     */
     public function group()
     {
         $user = auth()->user();
 
         if($user->is_admin == true) {
-            /*
-             * Query para: acceder a users y unirla con cuentas.
-             * A través del campo users.id con cuentas.id
-             */
             $query = User::join('cuentas', 'users.id', '=', 'cuentas.id')
             ->select('users.id', 'users.name', 'users.phone', 'cuentas.tipo', 'cuentas.numero_de_cuenta')
             ->get();
@@ -87,54 +83,55 @@ class UserController extends Controller
                 'success' => true,
                 'message' => "These are the user's data.",
                 'data' => $query
-            ], status: 200);
+            ],200);
         } else {
             return response()->json([
                 'success' => false,
                 'message' => 'You do not have access.',
-            ], status: 400);
+            ],400);
         }
     }
 
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return JsonResponse
+     * @throws Exception
      */
-    public function update(Request $request, User $user, $id)
+    public function update(Request $request, $id)
     {
-
         $user = auth()->user()->find($id);
+        DB::beginTransaction();
+        try {
 
-        if ($user->id !== $id && $user->is_admin == false) {
-            return response()->json([
-                'success' => false,
-                'message' => 'You do not have access.'
-            ], status: 400);
+            if ($user->id !== $id) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Bad credentials.'
+                ],400);
+            }
+
+            if (!$user) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'User not found.'
+                ],400);
+            }
+
+            $updated = $user->fill($request->all())->save();
+
+            DB::commit();
+        } catch (Exception $ex) {
+            DB::rollback();
+            report($ex);
+            throw new Exception(ExceptionHelper::formatExceptionMessage($ex));
         }
-
-        if (!$user) {
-            return response()->json([
-                'success' => false,
-                'message' => 'User not found.'
-            ], status: 400);
-        }
-
-        $updated = $user->fill($request->all())->save();
-
-        if ($updated)
-            return response()->json([
-                'success' => true,
-                'message' => 'User updated.'
-
-            ], status: 201);
-        else
-            return response()->json([
-                'success' => false,
-                'message' => 'User can not be updated.'
-            ], status: 500);
+        return response()->json([
+            'success' => true,
+            'message' => 'User updated.',
+            'data' => $updated
+        ],200);
     }
 
     /**
@@ -155,7 +152,7 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'logged-out.'
-        ], status: 200);
+        ],200);
     }
 
     public function search($name)
